@@ -43,7 +43,7 @@ export async function controller() {
       const events = await import("@/utils/events.js");
       const db = await import("@/utils/db.js").then((m) => m.getDb());
 
-      const { bloqId, status, isOccupied } = req.body;
+      const { bloqId, status = "CLOSED", isOccupied = false } = req.body;
 
       const data = { bloqId, status, isOccupied };
 

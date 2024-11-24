@@ -1,0 +1,30 @@
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+GET http://{{host}}/rents
+
+###
+
+POST http://{{host}}/rents
+Content-Type: application/json
+
+{
+  "size": "M",
+  "status": "CREATED",
+  "weight": 5,
+  "lockerId": "1b8d1e89-2514-4d91-b813-044bf0ce8d20"
+}
+
+###
+
+PUT http://{{host}}/rents/84ba232e-ce23-4d8f-ae26-68616600df48
+Content-Type: application/json
+
+{
+  "status": "DELIVERED"
+}
+
+###
+
+DELETE http://{{host}}/rents/84ba232e-ce23-4d8f-ae26-68616600df48

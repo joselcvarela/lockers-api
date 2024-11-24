@@ -1,0 +1,29 @@
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+GET http://{{host}}/lockers
+
+###
+
+POST http://{{host}}/lockers
+Content-Type: application/json
+
+{
+  "bloqId": "c3ee858c-f3d8-45a3-803d-e080649bbb6f",
+  "status": "CLOSED"
+  "isOccupied": false
+}
+
+###
+
+PUT http://{{host}}/lockers/1b8d1e89-2514-4d91-b813-044bf0ce8d20
+Content-Type: application/json
+
+{
+  "isOccupied": false
+}
+
+###
+
+DELETE http://{{host}}/lockers/1b8d1e89-2514-4d91-b813-044bf0ce8d20

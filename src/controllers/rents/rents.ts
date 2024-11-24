@@ -43,7 +43,7 @@ export async function controller() {
       const events = await import("@/utils/events.js");
       const db = await import("@/utils/db.js").then((m) => m.getDb());
 
-      const { size, status, weight, lockerId } = req.body;
+      const { size, status = "CREATED", weight, lockerId } = req.body;
 
       const data = { size, status, weight, lockerId };
 

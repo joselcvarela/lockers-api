@@ -1,0 +1,28 @@
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+GET http://{{host}}/bloqs
+
+###
+
+POST http://{{host}}/bloqs
+Content-Type: application/json
+
+{
+  "address": "New Bloq Address",
+  "title": "New Bloq Title"
+}
+
+###
+
+PUT http://{{host}}/bloqs/c3ee858c-f3d8-45a3-803d-e080649bbb6f
+Content-Type: application/json
+
+{
+  "address": "Updated Bloq Address"
+}
+
+###
+
+DELETE http://{{host}}/bloqs/c3ee858c-f3d8-45a3-803d-e080649bbb6f
