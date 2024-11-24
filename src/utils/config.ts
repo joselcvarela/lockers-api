@@ -11,18 +11,18 @@ export async function config() {
   };
 
   const server = {
-    port: Number(process.env.PORT),
+    port: Number(process.env.PORT ?? 3000),
     host: process.env.HOST ?? "0.0.0.0",
   };
 
-  const config = {
+  const configValue = {
     slack,
     server,
   };
 
-  await validate(config);
+  await validate(configValue);
 
-  return config;
+  return configValue;
 }
 
 async function validate(configValue: Config) {
