@@ -42,7 +42,7 @@ model Locker {
   bloq       Bloq         @relation(fields: [bloqId], references: [id])
   status     LockerStatus
   isOccupied Boolean
-  rent       Rent[]
+  rents      Rent[]
 }
 
 model Bloq {
