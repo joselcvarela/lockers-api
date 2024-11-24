@@ -9,7 +9,9 @@ export async function startServer() {
 
   await events.emit("middlewares.after", app);
 
-  await events.emit("routes", app);
+  await events.emit("routes.before", app);
+
+  await events.emit("routes.after", app);
 
   app.listen(config.server.port, config.server.host, () => {
     console.log(`Server started on : ${config.server.host}:${config.server.port}`);

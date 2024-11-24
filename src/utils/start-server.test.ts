@@ -27,7 +27,8 @@ test("starts listen on port", async () => {
 
   expect(emit).toHaveBeenNthCalledWith(1, "middlewares.before", app);
   expect(emit).toHaveBeenNthCalledWith(2, "middlewares.after", app);
-  expect(emit).toHaveBeenNthCalledWith(3, "routes", app);
+  expect(emit).toHaveBeenNthCalledWith(3, "routes.before", app);
+  expect(emit).toHaveBeenNthCalledWith(4, "routes.after", app);
 
   expect(app.listen).toBeCalledWith(
     configValue.server.port,
