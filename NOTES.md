@@ -1,0 +1,4 @@
+- Create collection "codes".
+  - "code" column should be argon2 hashed
+  - "expiresAt" because code is allocated to a locker
+  - "lockerId" should be allocated to a locker
