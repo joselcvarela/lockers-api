@@ -14,7 +14,9 @@
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true,
       "args": ["watch", "src/index.ts"],
-      "env": { "PORT": "3000" }
+      "env": {
+        "DATABASE_URL": "postgresql://api:secret@host.docker.internal:5432/lockers"
+      }
     }
   ]
 }
