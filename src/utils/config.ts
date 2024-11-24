@@ -12,6 +12,7 @@ export async function config() {
 
   const server = {
     port: process.env.PORT && Number(process.env.PORT),
+    host: process.env.HOST ?? "0.0.0.0",
   };
 
   const config = {

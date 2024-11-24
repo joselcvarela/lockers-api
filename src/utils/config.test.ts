@@ -20,6 +20,7 @@ test("succeeds if all configurations are set", async () => {
     },
     server: {
       port: 3000,
+      host: "0.0.0.0",
     },
   };
 
