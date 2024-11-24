@@ -6,7 +6,8 @@ const getEmitter = (function () {
 
   return async function () {
     if (!emitter) {
-      emitter = new (await import("eventemitter2")).EventEmitter2();
+      const { EventEmitter2 } = (await import("eventemitter2")).default;
+      emitter = new EventEmitter2();
     }
 
     return emitter;
@@ -18,7 +19,7 @@ export async function emit(event: "middlewares.after", app: Express): Promise<vo
 export async function emit(event: "routes", app: Express): Promise<void>;
 export async function emit(event: string, ...args: any[]) {
   const emitter = await getEmitter();
-  emitter.emit(event, ...args);
+  emitter.emitAsync(event, ...args);
 }
 
 export async function on(

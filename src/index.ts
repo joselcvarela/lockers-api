@@ -1,6 +1,7 @@
 async function start() {
   try {
-    // Start server
+    const { startServer } = await import("@/utils/start-server.js");
+    await startServer();
   } catch (error) {
     if (error && error.toString) {
       const { sendSlackMessage } = await import("@/utils/send-slack-message.js");
