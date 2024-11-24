@@ -1,6 +1,6 @@
 import { type Express } from "express";
 import { vi, expect, test, beforeEach } from "vitest";
-import { events } from "@/utils/events.js";
+import * as events from "@/utils/events.js";
 
 beforeEach(() => {
   vi.resetAllMocks();
@@ -8,14 +8,13 @@ beforeEach(() => {
 
 test("listen and receive data sent by emit", () => {
   return new Promise(async (done) => {
-    const event = await events();
     const expected = {} as Express;
 
-    event.on("middlewares.before", async (received) => {
+    await events.on("middlewares.before", async (received) => {
       expect(received).toBe(expected);
       done(true);
     });
 
-    event.emit("middlewares.before", expected);
+    await events.emit("middlewares.before", expected);
   });
 });
