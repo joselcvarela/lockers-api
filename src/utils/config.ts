@@ -11,7 +11,7 @@ export async function config() {
   };
 
   const server = {
-    port: process.env.PORT && Number(process.env.PORT),
+    port: Number(process.env.PORT),
     host: process.env.HOST ?? "0.0.0.0",
   };
 
@@ -26,5 +26,5 @@ export async function config() {
 }
 
 async function validate(configValue: Config) {
-  if (!configValue.server.port) throw new EnvVarRequiredError("PORT");
+  if (!(configValue.server.port > 0)) throw new EnvVarRequiredError("PORT");
 }
