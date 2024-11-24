@@ -27,4 +27,7 @@ export async function config() {
 
 async function validate(configValue: Config) {
   if (!(configValue.server.port > 0)) throw new EnvVarRequiredError("PORT");
+
+  const isHostValid = await import("validator").then((m) => m.isIP(configValue.server.host));
+  if (!isHostValid) throw new EnvVarRequiredError("HOST");
 }
