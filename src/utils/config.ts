@@ -11,6 +11,7 @@ export async function config() {
   };
 
   const server = {
+    production: process.env.NODE_ENV ? process.env.NODE_ENV === "production" : false,
     port: Number(process.env.PORT ?? 3000),
     host: process.env.HOST ?? "0.0.0.0",
   };
@@ -28,6 +29,8 @@ export async function config() {
 async function validate(configValue: Config) {
   if (!(configValue.server.port > 0)) throw new EnvVarRequiredError("PORT");
 
-  const isHostValid = await import("validator").then((m) => m.isIP(configValue.server.host));
+  const isHostValid = await import("validator").then((m) => {
+    return m.default.isIP(configValue.server.host);
+  });
   if (!isHostValid) throw new EnvVarRequiredError("HOST");
 }

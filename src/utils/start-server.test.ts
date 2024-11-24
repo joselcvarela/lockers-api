@@ -20,7 +20,7 @@ beforeEach(() => {
 });
 
 test("starts listen on port", async () => {
-  const configValue = { server: { host: "127.0.0.1", port: 3000 } };
+  const configValue = { server: { production: false, host: "127.0.0.1", port: 3000 } };
   vi.mocked<() => Promise<Partial<Config>>>(config).mockResolvedValueOnce(configValue);
 
   const app = await startServer();
