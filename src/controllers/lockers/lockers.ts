@@ -76,14 +76,18 @@ export async function controller() {
 
       const data = { bloqId, status, isOccupied };
 
-      await events.emit("locker.update.before", locker.id, data);
+      const updatedLocker = await db.$transaction(async (tx) => {
+        await events.emit("locker.update.before", locker.id, data, tx);
 
-      const updatedLocker = await db.locker.update({
-        where: { id: locker.id },
-        data,
+        const updatedLocker = await db.locker.update({
+          where: { id: locker.id },
+          data,
+        });
+
+        await events.emit("locker.update.after", locker.id, updatedLocker, tx);
+
+        return updatedLocker;
       });
-
-      await events.emit("locker.update.after", locker.id, updatedLocker);
 
       res.locals["data"] = updatedLocker;
       return next();

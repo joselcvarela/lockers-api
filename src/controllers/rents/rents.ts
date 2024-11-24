@@ -76,14 +76,18 @@ export async function controller() {
 
       const data = { size, status, weight, lockerId };
 
-      await events.emit("rent.update.before", rent.id, data);
+      const updatedRent = await db.$transaction(async (tx) => {
+        await events.emit("rent.update.before", rent.id, data, tx);
 
-      const updatedRent = await db.rent.update({
-        where: { id: rent.id },
-        data,
+        const updatedRent = await db.rent.update({
+          where: { id: rent.id },
+          data,
+        });
+
+        await events.emit("rent.update.after", rent.id, updatedRent, tx);
+
+        return updatedRent;
       });
-
-      await events.emit("rent.update.after", rent.id, updatedRent);
 
       res.locals["data"] = updatedRent;
       return next();

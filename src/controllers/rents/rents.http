@@ -6,6 +6,10 @@ GET http://{{host}}/rents
 
 ###
 
+GET http://{{host}}/rents/50be06a8-1dec-4b18-a23c-e98588207752
+
+###
+
 POST http://{{host}}/rents
 Content-Type: application/json
 
@@ -18,13 +22,13 @@ Content-Type: application/json
 
 ###
 
-PUT http://{{host}}/rents/84ba232e-ce23-4d8f-ae26-68616600df48
+PUT http://{{host}}/rents/ec9e44fa-f93d-43ef-8a75-089d46496f50
 Content-Type: application/json
 
 {
-  "status": "DELIVERED"
+  "status": "WAITING_DROPOFF"
 }
 
 ###
 
-DELETE http://{{host}}/rents/84ba232e-ce23-4d8f-ae26-68616600df48
+DELETE http://{{host}}/rents/50be06a8-1dec-4b18-a23c-e98588207752

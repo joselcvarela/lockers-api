@@ -78,14 +78,18 @@ export async function controller() {
 
       const data = { address, title };
 
-      await events.emit("bloq.update.before", bloq.id, data);
+      const updatedBloq = await db.$transaction(async (tx) => {
+        await events.emit("bloq.update.before", bloq.id, data, tx);
 
-      const updatedBloq = await db.bloq.update({
-        where: { id: bloq.id },
-        data,
+        const updatedBloq = await db.bloq.update({
+          where: { id: bloq.id },
+          data,
+        });
+
+        await events.emit("bloq.update.after", bloq.id, updatedBloq, tx);
+
+        return updatedBloq;
       });
-
-      await events.emit("bloq.update.after", bloq.id, updatedBloq);
 
       res.locals["data"] = updatedBloq;
       return next();

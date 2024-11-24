@@ -32,11 +32,13 @@ export async function emit(
   event: "bloq.update.before",
   id: string,
   bloq: Prisma.BloqUpdateInput,
+  tx: Prisma.TransactionClient,
 ): Promise<void>;
 export async function emit(
   event: "bloq.update.after",
   id: string,
   bloq: Prisma.BloqUpdateInput,
+  tx: Prisma.TransactionClient,
 ): Promise<void>;
 export async function emit(
   event: "bloq.delete.before",
@@ -61,11 +63,13 @@ export async function emit(
   event: "locker.update.before",
   id: string,
   locker: Prisma.LockerUpdateInput,
+  tx: Prisma.TransactionClient,
 ): Promise<void>;
 export async function emit(
   event: "locker.update.after",
   id: string,
   locker: Prisma.LockerUpdateInput,
+  tx: Prisma.TransactionClient,
 ): Promise<void>;
 export async function emit(
   event: "locker.delete.before",
@@ -90,11 +94,13 @@ export async function emit(
   event: "rent.update.before",
   id: string,
   rent: Prisma.RentUpdateInput,
+  tx: Prisma.TransactionClient,
 ): Promise<void>;
 export async function emit(
   event: "rent.update.after",
   id: string,
   rent: Prisma.RentUpdateInput,
+  tx: Prisma.TransactionClient,
 ): Promise<void>;
 export async function emit(
   event: "rent.delete.before",
@@ -137,11 +143,19 @@ export async function on(
 ): Promise<void>;
 export async function on(
   event: "bloq.update.before",
-  listener: (id: string, bloq: Prisma.BloqUpdateInput) => Promise<void>,
+  listener: (
+    id: string,
+    bloq: Prisma.BloqUpdateInput,
+    tx: Prisma.TransactionClient,
+  ) => Promise<void>,
 ): Promise<void>;
 export async function on(
   event: "bloq.update.after",
-  listener: (id: string, bloq: Prisma.BloqUpdateInput) => Promise<void>,
+  listener: (
+    id: string,
+    bloq: Prisma.BloqUpdateInput,
+    tx: Prisma.TransactionClient,
+  ) => Promise<void>,
 ): Promise<void>;
 export async function on(
   event: "bloq.delete.before",
@@ -161,11 +175,19 @@ export async function on(
 ): Promise<void>;
 export async function on(
   event: "locker.update.before",
-  listener: (id: string, locker: Prisma.LockerUpdateInput) => Promise<void>,
+  listener: (
+    id: string,
+    locker: Prisma.LockerUpdateInput,
+    tx: Prisma.TransactionClient,
+  ) => Promise<void>,
 ): Promise<void>;
 export async function on(
   event: "locker.update.after",
-  listener: (id: string, locker: Prisma.LockerUpdateInput) => Promise<void>,
+  listener: (
+    id: string,
+    locker: Prisma.LockerUpdateInput,
+    tx: Prisma.TransactionClient,
+  ) => Promise<void>,
 ): Promise<void>;
 export async function on(
   event: "locker.delete.before",
@@ -185,11 +207,19 @@ export async function on(
 ): Promise<void>;
 export async function on(
   event: "rent.update.before",
-  listener: (id: string, rent: Prisma.RentUpdateInput) => Promise<void>,
+  listener: (
+    id: string,
+    rent: Prisma.RentUpdateInput,
+    tx: Prisma.TransactionClient,
+  ) => Promise<void>,
 ): Promise<void>;
 export async function on(
   event: "rent.update.after",
-  listener: (id: string, rent: Prisma.RentUpdateInput) => Promise<void>,
+  listener: (
+    id: string,
+    rent: Prisma.RentUpdateInput,
+    tx: Prisma.TransactionClient,
+  ) => Promise<void>,
 ): Promise<void>;
 export async function on(
   event: "rent.delete.before",
