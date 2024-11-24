@@ -11,7 +11,10 @@ beforeEach(() => {
 });
 
 test("sends message successfully", async () => {
-  const configValue = { slack: { channelId: "CHANNEL", token: "TOKEN" } };
+  const configValue = {
+    server: { production: true },
+    slack: { channelId: "CHANNEL", token: "TOKEN" },
+  };
   vi.mocked<MockedConfig>(config).mockResolvedValueOnce(configValue);
 
   vi.mocked(axios.post).mockResolvedValueOnce({ data: {} });
@@ -42,7 +45,10 @@ test("sends message successfully", async () => {
 });
 
 test("fails to send message", async () => {
-  const configValue = { slack: { channelId: "CHANNEL", token: "TOKEN" } };
+  const configValue = {
+    server: { production: true },
+    slack: { channelId: "CHANNEL", token: "TOKEN" },
+  };
   vi.mocked<MockedConfig>(config).mockResolvedValueOnce(configValue);
 
   const error = new AxiosError("Something went wrong", "500");

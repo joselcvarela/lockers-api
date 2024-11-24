@@ -2,6 +2,8 @@ export async function sendSlackMessage(message: string) {
   const config = await import("@/utils/config.js").then((m) => m.config());
   const axios = (await import("axios")).default;
 
+  if (!config.server.production) return;
+
   return axios
     .post(
       "https://slack.com/api/chat.postMessage",
@@ -21,7 +23,7 @@ export async function sendSlackMessage(message: string) {
         headers: {
           Authorization: `Bearer ${config.slack.token}`,
         },
-      }
+      },
     )
     .catch((error) => {
       console.error("Was not able to send message to slack:", message);
