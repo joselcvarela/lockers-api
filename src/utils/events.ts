@@ -20,7 +20,7 @@ export async function emit(event: "routes.before", app: Express): Promise<void>;
 export async function emit(event: "routes.after", app: Express): Promise<void>;
 export async function emit(event: string, ...args: any[]) {
   const emitter = await getEmitter();
-  emitter.emitAsync(event, ...args);
+  await emitter.emitAsync(event, ...args);
 }
 
 export async function on(
