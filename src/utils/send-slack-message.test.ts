@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { vi, expect, test, afterEach, beforeEach } from "vitest";
+import { vi, expect, test, beforeEach } from "vitest";
 import { config, type MockedConfig } from "@/utils/config.js";
 import { sendSlackMessage } from "./send-slack-message.js";
 
