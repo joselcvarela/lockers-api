@@ -1,5 +1,8 @@
 async function start() {
   try {
+    await import("@/middlewares/index.js");
+    await import("@/modules/index.js");
+
     const { startServer } = await import("@/utils/start-server.js");
     await startServer();
   } catch (error) {
