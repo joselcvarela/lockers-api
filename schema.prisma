@@ -24,8 +24,8 @@ enum RentStatus {
 
 model Rent {
   id       String     @id @default(uuid()) @db.Uuid
-  lockerId String?     @db.Uuid
-  locker   Locker?     @relation(fields: [lockerId], references: [id])
+  lockerId String?    @db.Uuid
+  locker   Locker?    @relation(fields: [lockerId], references: [id])
   weight   Int
   size     RentSize
   status   RentStatus
@@ -39,15 +39,15 @@ enum LockerStatus {
 model Locker {
   id         String       @id @default(uuid()) @db.Uuid
   bloqId     String       @db.Uuid
-  Bloq       Bloq         @relation(fields: [bloqId], references: [id])
+  bloq       Bloq         @relation(fields: [bloqId], references: [id])
   status     LockerStatus
   isOccupied Boolean
-  Rent       Rent[]
+  rent       Rent[]
 }
 
 model Bloq {
   id      String   @id @default(uuid()) @db.Uuid
   title   String
   address String
-  Locker  Locker[]
+  lockers Locker[]
 }
