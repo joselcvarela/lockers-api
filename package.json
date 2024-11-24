@@ -7,6 +7,9 @@
     "dev": "tsup src/index.ts --watch --onSuccess \"node dist/index.cjs\"",
     "test": "vitest"
   },
+  "prisma": {
+    "seed": "tsx seeds/index.ts"
+  },
   "author": "José Varela",
   "license": "MIT",
   "description": "",
@@ -14,12 +17,14 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.9.3",
     "@types/validator": "^13.12.2",
+    "prisma": "^5.22.0",
     "tsup": "^8.3.5",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vitest": "^2.1.5"
   },
   "dependencies": {
+    "@prisma/client": "^5.22.0",
     "axios": "^1.7.7",
     "eventemitter2": "^6.4.9",
     "express": "^4.21.1",

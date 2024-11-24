@@ -1,0 +1,53 @@
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum RentSize {
+  XS
+  S
+  M
+  L
+  XL
+}
+
+enum RentStatus {
+  CREATED
+  WAITING_DROPOFF
+  WAITING_PICKUP
+  DELIVERED
+}
+
+model Rent {
+  id       String     @id @default(uuid()) @db.Uuid
+  lockerId String?     @db.Uuid
+  locker   Locker?     @relation(fields: [lockerId], references: [id])
+  weight   Int
+  size     RentSize
+  status   RentStatus
+}
+
+enum LockerStatus {
+  OPEN
+  CLOSED
+}
+
+model Locker {
+  id         String       @id @default(uuid()) @db.Uuid
+  bloqId     String       @db.Uuid
+  Bloq       Bloq         @relation(fields: [bloqId], references: [id])
+  status     LockerStatus
+  isOccupied Boolean
+  Rent       Rent[]
+}
+
+model Bloq {
+  id      String   @id @default(uuid()) @db.Uuid
+  title   String
+  address String
+  Locker  Locker[]
+}

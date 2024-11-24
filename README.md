@@ -28,3 +28,4 @@ This project has some configurations that can be set via environment variables:
 - `HOST`: what is the interface to listen for the API (default is "0.0.0.0")
 - `SLACK_CHANNEL_ID`: what is the channel ID to send Slack notifications (optional)
 - `SLACK_TOKEN`: what is the [Slack APP token](https://api.slack.com/tutorials/tracks/getting-a-token) to use to send Slack notifications (optional)
+- `DATABASE_URL`: URL string to connect with database
