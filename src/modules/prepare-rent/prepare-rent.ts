@@ -1,67 +1,27 @@
-import { NotFoundError } from "@/errors/NotFoundError.js";
-import { ValidationError } from "@/errors/ValidationError.js";
-import { NoFreeLockersError } from "@/modules/prepare-rent/NoFreeLockersError.js";
-
 export async function start() {
   const events = await import("@/utils/events.js");
+  const { HttpError } = await import("@/errors/HttpError.js");
 
-  await events.on("routes.before", async (app) => {
-    const express = await import("express");
-    const { respond } = await import("@/middlewares/respond/respond.js");
-    const db = await import("@/utils/db.js").then((m) => m.getDb());
-    const { route } = await import("@/utils/route.js");
-    const router = express.Router();
+  await events.on("rent.update.before", async (id, data, tx) => {
+    if (data.status) {
+      const status = ["CREATED", "WAITING_DROPOFF", "WAITING_PICKUP", "DELIVERED"];
 
-    router.post(
-      "/prepare-rent",
-      route(async (req, res, next) => {
-        await validate(req.body);
+      const existent = await tx.rent.findFirst({ where: { id }, include: { locker: true } });
+      const locker = existent?.locker;
 
-        const { bloqId, weight, size } = req.body;
+      const indexExistentStatus = status.indexOf(existent?.status || "");
+      const indexNewStatus = status.indexOf(String(data.status || ""));
 
-        const bloq = await db.bloq.findFirst({
-          where: { id: bloqId },
-          include: { lockers: { where: { isOccupied: false } } },
-        });
+      if (indexNewStatus < indexExistentStatus) {
+        throw new HttpError(`Cannot move "Rent" to "${data.status}"`, 400);
+      }
 
-        if (!bloq?.id) throw new NotFoundError("Bloq", bloqId);
+      if (data.status === "WAITING_DROPOFF" && locker?.id) {
+        if (locker.isOccupied)
+          throw new HttpError("Cannot allocate Locker as it is already occupied", 409);
 
-        const locker = bloq.lockers.at(0);
-        if (!locker) throw new NoFreeLockersError();
-
-        const rent = await db.$transaction(async (tx) => {
-          const rent = await tx.rent.create({
-            data: {
-              lockerId: locker.id,
-              weight,
-              size,
-              status: "WAITING_DROPOFF",
-            },
-          });
-
-          await tx.locker.update({ where: { id: locker.id }, data: { isOccupied: true } });
-
-          return rent;
-        });
-
-        res.locals["data"] = rent;
-        return next();
-      }),
-      respond,
-    );
-
-    app.use(router);
+        await tx.locker.update({ where: { id: locker.id }, data: { isOccupied: true } });
+      }
+    }
   });
-}
-
-async function validate(body: { lockerId: string; weight: string; size: string }) {
-  const validator = await import("validator").then((m) => m.default);
-
-  if (!validator.isUUID(body.lockerId, "4")) throw new ValidationError("lockerId", "uuid");
-
-  if (!(Number(body.weight) > 0)) throw new ValidationError("weight", "number greater than zero");
-
-  const sizes = ["XS", "S", "M", "L", "XL"];
-  if (!validator.isIn(String(body.size), sizes))
-    throw new ValidationError("size", sizes.toString());
 }
