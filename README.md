@@ -11,6 +11,9 @@ In order to run this project you just need to have ["docker compose"](https://do
 docker compose up --build api
 ```
 
+Every time you restart the container, the database will be reset with migrations and seeds.
+In order to prevent this, remove `pnpm run reset --force` from the `command` entry on `docker-compose.yml`
+
 # Contributing (Development)
 
 In order to contribute to this project (or just run it locally), you will need to install dependencies and run dev command like:

@@ -14,3 +14,8 @@ services:
       - postgres
     ports:
       - 3000:3000
+    environment:
+      DATABASE_URL: postgresql://api:secret@host.docker.internal:5432/lockers
+    command: >
+      sh -c "pnpm run reset --force &&
+             pnpm run prod"
